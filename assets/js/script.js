@@ -34,6 +34,8 @@ if (!taskNameInput || !taskTypeInput) {
     alert("You need to fill out the task form!");
     return false;
   }
+  var isEdit = formEl.hasAttribute("data-task-id");
+
   // package up data as an object
   var taskDataObj = {
       name: taskNameInput,
@@ -41,7 +43,20 @@ if (!taskNameInput || !taskTypeInput) {
   };
 
   // send it as an argument to createTaskEl
+  // has data attribute, so get task id and call function to complete edit process
+if (isEdit) {
+  var taskId = formEl.getAttribute("data-task-id");
+  completeEditTask(taskNameInput, taskTypeInput, taskId);
+} 
+// no data attribute, so create object as normal and pass to createTaskEl function
+else {
+  var taskDataObj = {
+    name: taskNameInput,
+    type: taskTypeInput
+  };
+
   createTaskEl(taskDataObj);
+}
   formEl.reset();
 };
 
